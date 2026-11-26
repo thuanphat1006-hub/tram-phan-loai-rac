@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2f7d4a">
+  <title>Trạm phân loại rác cùng Mèo Rừng Eco</title>
+  <style>
+    :root {
+      --green: #2f7d4a;
+      --green-dark: #205b36;
+      --cream: #f5f8ef;
+      --ink: #203027;
+      --muted: #607064;
+      --yellow: #f3c94f;
+      --gray: #87918b;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: #f6f8f4;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    .topbar {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(255,255,255,.94);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #e5ebe3;
+    }
+    .nav {
+      max-width: 1120px; margin: auto; padding: 13px 22px;
+      display: flex; align-items: center; justify-content: space-between; gap: 18px;
+    }
+    .brand { font-weight: 850; color: var(--green-dark); letter-spacing: -.4px; }
+    .navlinks { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+    .navlinks a {
+      padding: 8px 12px; border-radius: 999px; font-size: .92rem;
+      color: #405247; transition: .2s;
+    }
+    .navlinks a:hover, .navlinks a.active { background: #e8f2e8; color: var(--green-dark); }
+    .wrap { max-width: 1240px; margin: auto; padding: 0 30px; }
+    .hero {
+      padding: 64px 0 48px;
+      background: radial-gradient(circle at 85% 15%, #e4f1d9 0, transparent 28%),
+                  linear-gradient(135deg, #f3f8ed, #e9f3e8);
+      overflow: hidden;
+    }
+    .hero-grid { display: grid; grid-template-columns: 1.12fr .88fr; gap: 56px; align-items: center; }
+    .eyebrow {
+      display: inline-block; padding: 6px 12px; border-radius: 999px;
+      background: #dceedd; color: var(--green-dark); font-weight: 750; font-size: .85rem;
+    }
+    h1 { font-size: clamp(2.25rem, 5vw, 4.1rem); line-height: 1.08; letter-spacing: -1.8px; margin: 18px 0; }
+    h1 span { color: var(--green); }
+    .lead { color: #53665a; font-size: 1.1rem; max-width: 600px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--green); color: white; border: 0; cursor: pointer;
+      padding: 12px 19px; border-radius: 12px; font-weight: 750; margin-top: 14px;
+      box-shadow: 0 7px 18px #2f7d4a2b; transition: .2s;
+    }
+    .btn:hover { background: var(--green-dark); transform: translateY(-2px); }
+    .mascot {
+      min-height: 310px; border-radius: 32px; background: #dcebd5;
+      display: grid; place-items: center; position: relative; overflow: hidden;
+      border: 1px solid #c9dfc7;
+    }
+    .mascot .cat { font-size: clamp(7rem, 16vw, 12rem); filter: drop-shadow(0 12px 5px #315d3325); }
+    .bubble {
+      position: absolute; right: 7%; top: 10%; max-width: 180px;
+      background: white; border-radius: 18px 18px 4px 18px; padding: 12px 15px;
+      font-weight: 700; color: var(--green-dark); box-shadow: 0 8px 24px #1b46201a;
+    }
+    section { padding: 76px 0; }
+    .section-head { text-align: center; max-width: 700px; margin: 0 auto 30px; }
+    .section-head h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); margin: 0 0 8px; letter-spacing: -.8px; }
+    .section-head p { color: var(--muted); margin: 0; }
+    .bins { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+    .bin {
+      background: white; border-radius: 22px; padding: 24px; text-align: center;
+      border: 1px solid #e6ece4; box-shadow: 0 8px 24px #253d2a08;
+    }
+    .bin-icon { font-size: 3.4rem; margin-bottom: 7px; }
+    .bin h3 { margin: 5px 0; font-size: 1.25rem; }
+    .bin p { color: var(--muted); margin: 6px 0 15px; min-height: 52px; }
+    .tag { display: inline-block; padding: 5px 11px; border-radius: 999px; font-size: .83rem; font-weight: 800; }
+    .tag.green { background: #e2f2e4; color: #24643a; }
+    .tag.yellow { background: #fff3c9; color: #775b00; }
+    .tag.gray { background: #edf0ee; color: #56615b; }
+    .examples { display: flex; gap: 7px; justify-content: center; flex-wrap: wrap; }
+    .examples span { background: #f3f6f2; padding: 5px 9px; border-radius: 8px; font-size: .85rem; }
+    .event {
+      background: #fff8df; border: 1px solid #f0e2ad; border-radius: 26px;
+      padding: 30px; display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center;
+    }
+    .event h2 { margin: 0 0 8px; font-size: 1.8rem; }
+    .event p { margin: 0; color: #665b36; }
+    .event-date { background: white; border-radius: 18px; padding: 16px 20px; text-align: center; min-width: 145px; }
+    .event-date strong { display: block; font-size: 1.4rem; color: #826400; }
+    .event-date span { font-size: .9rem; color: #766a44; }
+    .pledge {
+      margin-top: 28px; background: white; border-radius: 24px; padding: 25px;
+      border: 1px solid #e6ece4; text-align: center;
+    }
+    .pledge p { color: var(--muted); }
+    .pledge button { margin: 4px; }
+    #thanks { min-height: 1.5em; color: var(--green-dark); font-weight: 750; }
+    footer { background: #203e2b; color: #e9f2e8; padding: 25px 0; text-align: center; }
+    footer small { color: #c2d5c4; }
+    @media (min-width: 1100px) {
+      .hero { padding: 86px 0 72px; }
+      .lead { font-size: 1.18rem; line-height: 1.8; }
+      .bin { min-height: 300px; }
+      .event { padding: 38px 42px; }
+      .section-head { margin-bottom: 38px; }
+    }
+    @media (max-width: 760px) {
+      .nav { align-items: flex-start; flex-direction: column; }
+      .navlinks { justify-content: flex-start; }
+      .hero { padding-top: 42px; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .mascot { min-height: 230px; }
+      .bins { grid-template-columns: 1fr; }
+      .bin p { min-height: 0; }
+      .event { grid-template-columns: 1fr; }
+      .event-date { justify-self: start; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <nav class="nav" aria-label="Điều hướng chính">
+      <a class="brand" href="#home">🌿 MÈO RỪNG ECO</a>
+      <div class="navlinks">
+        <a href="#home">Trang chủ</a>
+        <a class="active" href="#phan-loai">Phân loại rác</a>
+        <a href="#tiet-kiem">Tiết kiệm điện</a>
+        <a href="#an-toan">An toàn</a>
+        <a href="#gop-y">Góp ý</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="eyebrow">CÙNG HÀNH ĐỘNG VÌ MÔI TRƯỜNG XANH</span>
+          <h1>TRẠM PHÂN LOẠI RÁC<br><span>CÙNG MÈO RỪNG ECO</span></h1>
+          <p class="lead">Xin chào các bạn! Mèo Rừng Eco rất vui khi được đồng hành cùng bạn xây dựng thói quen sống xanh. Hãy mang bình nước cá nhân và phân loại rác đúng nơi nhé!</p>
+          <a class="btn" href="#phan-loai">Bắt đầu phân loại rác ↓</a>
+        </div>
+        <div class="mascot" aria-label="Hình minh họa mèo và các thùng rác">
+          <div class="bubble">“Bỏ rác đúng thùng – Trái Đất thêm xanh!”</div>
+          <div class="cat" aria-hidden="true">🐱</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="phan-loai">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>3 thùng rác – 3 cách phân loại</h2>
+          <p>Chọn đúng thùng để rác được xử lý phù hợp và giảm lượng rác thải ra môi trường.</p>
+        </div>
+        <div class="bins">
+          <article class="bin">
+            <div class="bin-icon" aria-hidden="true">🟩</div>
+            <h3>Thùng xanh lá</h3>
+            <span class="tag green">RÁC HỮU CƠ</span>
+            <p>Rác có nguồn gốc từ thực vật, thức ăn và có khả năng phân hủy sinh học.</p>
+            <div class="examples"><span>Vỏ trái cây</span><span>Rau củ</span><span>Thức ăn thừa</span></div>
+          </article>
+          <article class="bin">
+            <div class="bin-icon" aria-hidden="true">🟨</div>
+            <h3>Thùng vàng</h3>
+            <span class="tag yellow">RÁC TÁI CHẾ</span>
+            <p>Những vật liệu có thể thu gom, phân loại và tái chế thành sản phẩm mới.</p>
+            <div class="examples"><span>Giấy</span><span>Chai nhựa</span><span>Lon kim loại</span></div>
+          </article>
+          <article class="bin">
+            <div class="bin-icon" aria-hidden="true">⬜</div>
+            <h3>Thùng xám</h3>
+            <span class="tag gray">RÁC CÒN LẠI</span>
+            <p>Rác không thuộc nhóm hữu cơ hoặc tái chế theo hướng dẫn của trạm.</p>
+            <div class="examples"><span>Giấy bẩn</span><span>Khăn giấy đã dùng</span><span>Rác khó tái chế</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="tiet-kiem" style="background:#edf4eb">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Mỗi ngày một hành động xanh</h2>
+          <p>Những thói quen nhỏ có thể tạo nên thay đổi tích cực.</p>
+        </div>
+        <div class="bins">
+          <article class="bin"><div class="bin-icon">🔌</div><h3>Tắt khi không dùng</h3><p>Tắt đèn, quạt và thiết bị điện khi ra khỏi phòng.</p></article>
+          <article class="bin"><div class="bin-icon">💧</div><h3>Tiết kiệm nước</h3><p>Khóa vòi nước sau khi sử dụng và tránh để nước chảy lãng phí.</p></article>
+          <article class="bin"><div class="bin-icon">🥤</div><h3>Dùng đồ cá nhân</h3><p>Mang bình nước, hộp đựng và túi có thể sử dụng nhiều lần.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="an-toan">
+      <div class="wrap">
+        <div class="event">
+          <div>
+            <h2>🎉 Ngày hội Đổi rác lấy quà xanh</h2>
+            <p>Diễn ra vào chiều thứ Sáu cuối cùng mỗi tháng. Mang giấy vụn đến đổi lấy sen đá và bút thân thiện với môi trường. Nhớ phân loại và giữ giấy khô, sạch để việc thu gom thuận tiện hơn nhé!</p>
+          </div>
+          <div class="event-date"><strong>Thứ Sáu</strong><span>Cuối mỗi tháng · Buổi chiều</span></div>
+        </div>
+        <div class="pledge">
+          <h3>💚 Bạn đã sẵn sàng sống xanh chưa?</h3>
+          <p>Hãy cùng Mèo Rừng Eco bắt đầu từ một hành động nhỏ hôm nay.</p>
+          <button class="btn" type="button" onclick="showThanks()">Mình tham gia!</button>
+          <div id="thanks" role="status" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="gop-y" style="background:#edf4eb">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Góp ý cho Mèo Rừng Eco</h2>
+          <p>Bạn có ý tưởng nào để trạm phân loại rác hoạt động tốt hơn? Hãy chia sẻ nhé!</p>
+          <a class="btn" href="mailto:">Gửi góp ý qua email</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <strong>🌱 Mèo Rừng Eco – Sống xanh từ những điều nhỏ nhất</strong><br>
+      <small>© Nhóm 3 – Lớp 12A1</small><br>
+      <a href="#home">↑ Về trang chủ</a>
+    </div>
+  </footer>
+
+  <script>
+    function showThanks() {
+      document.getElementById('thanks').textContent =
+        'Tuyệt vời! Cảm ơn bạn đã cùng Mèo Rừng Eco lan tỏa lối sống xanh 💚';
+    }
+  </script>
+</body>
+</html>
